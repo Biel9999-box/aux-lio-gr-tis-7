@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALFA.IA V5 - FINAL MASTER</title>
+    <title>ALFA.IA V7 - ULTIMATE FIX</title>
     <style>
         :root { 
             --bg: #050507; 
@@ -14,7 +14,7 @@
         }
         body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
 
-        /* LOGIN */
+        /* TELA DE LOGIN */
         #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: 0.8s; }
         .login-card { width: 85%; max-width: 350px; text-align: center; padding: 35px; border-radius: 25px; background: #0d0d12; border: 1px solid var(--card-border); }
         .login-title { font-size: 28px; font-weight: 900; color: var(--primary); margin-bottom: 10px; text-shadow: 0 0 15px var(--primary); }
@@ -22,7 +22,7 @@
         .btn-login { width: 100%; padding: 16px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .hide-login { transform: translateY(-100%); opacity: 0; pointer-events: none; }
 
-        /* PANEL */
+        /* PAINEL PRINCIPAL */
         .container { width: 100%; max-width: 410px; margin: auto; padding: 15px; box-sizing: border-box; display: none; }
         .show-panel { display: block; }
         .header { display: flex; flex-direction: column; align-items: center; margin: 20px 0; }
@@ -32,8 +32,8 @@
         .tab { flex: 1; padding: 12px; background: #13131c; border-radius: 12px; font-size: 10px; font-weight: 800; color: #444; cursor: pointer; text-align: center; }
         .tab.active { background: var(--primary); color: white; }
 
-        /* CHAT AREA */
-        .chat-area { height: 460px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding: 12px; background: rgba(15, 15, 25, 0.9); border-radius: 18px; border: 1px solid #1a1a24; margin-bottom: 15px; }
+        /* ÁREA DO CHAT */
+        .chat-area { height: 440px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding: 12px; background: rgba(15, 15, 25, 0.9); border-radius: 18px; border: 1px solid #1a1a24; margin-bottom: 15px; }
         .bubble { padding: 15px; border-radius: 20px; font-size: 13px; max-width: 90%; line-height: 1.6; white-space: pre-wrap; }
         .bot { background: #161621; border-left: 5px solid var(--primary); align-self: flex-start; color: #eee; }
         .user { background: var(--primary); align-self: flex-end; font-weight: bold; }
@@ -42,8 +42,8 @@
         .input-group input { flex: 1; background: transparent; border: none; color: white; outline: none; padding-left: 10px; }
         .send-btn { background: var(--primary); border: none; border-radius: 15px; width: 55px; color: white; cursor: pointer; }
 
-        .main-btn { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 15px; color: white; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
-        .ff-btn { width: 100%; padding: 15px; background: linear-gradient(90deg, #ff4500, #ff8c00); border: none; border-radius: 15px; color: white; font-weight: 900; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
+        .main-btn { width: 100%; padding: 16px; background: var(--primary); border: none; border-radius: 15px; color: white; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; cursor: pointer; font-size: 12px; }
+        .ff-btn { width: 100%; padding: 15px; background: linear-gradient(90deg, #ff4500, #ff8c00); border: none; border-radius: 15px; color: white; font-weight: 900; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; cursor: pointer; }
         .hidden { display: none; }
     </style>
 </head>
@@ -52,7 +52,7 @@
 <div id="login-screen">
     <div class="login-card">
         <div class="login-title">ALFA.IA ⚡</div>
-        <p style="font-size:10px; color:#555; margin-bottom: 20px;">V5.0 FINAL - ANTI-BUG SYSTEM</p>
+        <p style="font-size:10px; color:#555; margin-bottom: 20px;">V7.0 ULTIMATE - BY LEWI PROJECT</p>
         <input type="text" id="loginKey" class="input-login" placeholder="DIGITE A KEY">
         <button class="btn-login" onclick="attemptLogin()">ACESSAR SISTEMA</button>
         <div id="loginStatus" style="font-size:11px; margin-top:15px; color:#ff0055; font-weight:bold;"></div>
@@ -61,7 +61,7 @@
 
 <div class="container" id="main-panel">
     <div class="header">
-        <div class="header-title">ALFA.IA V5 ⚡</div>
+        <div class="header-title">ALFA.IA V7 ⚡</div>
         <div style="font-size: 10px; color: #666; font-weight: 800;">PRODUCED BY ALFA CHEATS 👑</div>
     </div>
     
@@ -74,23 +74,32 @@
     <div id="tab-bot">
         <div class="chat-area" id="chat-box"></div>
         <div class="input-group">
-            <input type="text" id="userInput" placeholder="Aguarde o Manifesto... 🔒" disabled>
+            <input type="text" id="userInput" placeholder="Aguarde... 🔒" disabled>
             <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
         </div>
     </div>
 
     <div id="tab-tool" class="hidden">
-        <button class="main-btn" onclick="execute(this, 'AIMBOT ATIVO! 🎯')">INJETAR AIMBOT / FOV</button>
-        <button class="ff-btn" onclick="window.location.href='freefire://'">🔫 ABRIR FREE FIRE</button>
+        <button class="main-btn" onclick="execute(this, 'NO RECOIL: ATIVO (REGEDIT) 🛠️')">ATIVAR NO RECOIL (FIXED)</button>
+        <button class="main-btn" onclick="execute(this, 'HS PESCOÇO: 100% CRÂNIO 💀')">ATIVAR HS PESCOÇO (LOCK)</button>
+        <button class="main-btn" onclick="execute(this, 'AIMBOT/FOV INJETADO! 🎯')">INJETAR AUXÍLIO GERAL</button>
+        <button class="ff-btn" onclick="openFF()">🔫 ABRIR FREE FIRE</button>
     </div>
 
     <div id="tab-fps" class="hidden">
-        <button class="main-btn" onclick="execute(this, 'OTIMIZADO! 🚀')">BOOST HARDWARE</button>
-        <button class="ff-btn" onclick="window.location.href='freefire://'">🔥 INSTANT START FF</button>
+        <button class="main-btn" onclick="execute(this, 'SISTEMA OTIMIZADO! 🚀')">BOOST HARDWARE</button>
+        <button class="ff-btn" onclick="openFF()">🔥 INSTANT START FF</button>
     </div>
 </div>
 
 <script>
+    function openFF() {
+        window.location.href = "freefire://";
+        setTimeout(function() {
+            window.location.href = "intent://#Intent;package=com.dts.freefireth;scheme=freefire;end";
+        }, 800);
+    }
+
     function attemptLogin() {
         const keyVal = document.getElementById('loginKey').value.trim().toLowerCase();
         if(keyVal === "alfa") {
@@ -107,16 +116,7 @@
     const btnSend = document.getElementById('sendBtn');
 
     function startBot() {
-        const manifesto = `[SYSTEM V5.0 ONLINE] 📂
-DEV: LEWI DOS SANTOS OLIVEIRA 👑
-
-Calibração Unificada Ativa. 
-Identificarei todas as armas e gerarei a melhor SENSI ÚNICA para o conjunto.
-
-------------------------------------------
-EXEMPLO DE USO:
-------------------------------------------
-"Motorola G53, Desert, UMP, M1014" 👇`;
+        const manifesto = `[ULTIMATE V7 ONLINE] 📂\nDEV: LEWI DOS SANTOS OLIVEIRA 👑\n\nNo Recoil e HS Pescoço integrados com sucesso.\nDigite seu Celular e as Armas 👇`;
         typeMessage(manifesto, "bot");
     }
 
@@ -135,7 +135,7 @@ EXEMPLO DE USO:
                 input.placeholder = "Modelo, Armas... 🔓";
                 input.focus();
             }
-        }, 3);
+        }, 5);
     }
 
     function sendMessage() {
@@ -147,40 +147,21 @@ EXEMPLO DE USO:
 
         setTimeout(() => {
             const r = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-            
             let partes = val.split(',');
             let modelo = partes[0].trim().toUpperCase();
-            
-            // Limpa a lista de armas
             let armasStr = partes.slice(1).join(',').replace(/\s+e\s+/gi, ',');
             let listaArmas = armasStr.split(',').map(a => a.trim().toUpperCase()).filter(a => a.length > 0);
 
-            // Gera a SENSI ÚNICA que serve para todas as armas citadas
-            let g = r(194, 200); 
-            let rd = r(180, 195);
-            let m2 = r(175, 192);
-            let m4 = r(170, 188);
+            let g = r(195, 200); let rd = r(185, 196); let m2 = r(178, 192); let m4 = r(172, 188);
 
-            let res = `⚠️ **CONFIGURAÇÃO UNIFICADA V5** ⚠️\n\n[HARDWARE]: ${modelo}\n[ARMAS]: ${listaArmas.join(' | ')}\n----------------------------------\n\n`;
-            
-            res += `🎯 **SENSIBILIDADE MESTRA:**\n`;
-            res += `• Geral: ${g}\n`;
-            res += `• Red Dot: ${rd}\n`;
-            res += `• Mira 2x: ${m2}\n`;
-            res += `• Mira 4x: ${m4}\n\n`; // AQUI ESTÁ A CORREÇÃO DA 4X
+            let res = `⚠️ **CONFIGURAÇÃO V7 ULTIMATE** ⚠️\n\n[CELULAR]: ${modelo}\n[ARMAS]: ${listaArmas.join(' | ')}\n----------------------------------\n\n`;
+            res += `🎯 **SENSIBILIDADE ÚNICA:**\n• Geral: ${g}\n• Red Dot: ${rd}\n• Mira 2x: ${m2}\n• Mira 4x: ${m4}\n\n`;
 
-            // TRAVA DE DPI MOTOROLA G53
             let dpi;
-            if (modelo.includes("G53")) {
-                dpi = r(510, 580); // NUNCA PASSARÁ DE 580
-            } else {
-                dpi = r(600, 920);
-            }
+            if (modelo.includes("G53")) { dpi = r(510, 580); } 
+            else { dpi = r(620, 940); }
             
-            let btn = r(45, 54);
-
-            res += `----------------------------------\n📱 DPI IDEAL: ${dpi}\n🔘 BOTÃO: ${btn}%\n\nStatus: **SABOR HACK ATIVADO!** 😈✅`;
-            
+            res += `----------------------------------\n📱 DPI RECOMENDADA: ${dpi}\n🔘 BOTÃO: ${r(44, 55)}%\n\nStatus: **SABOR HACK ATIVADO!** 😈✅`;
             typeMessage(res, "bot");
         }, 1000);
     }
@@ -193,8 +174,8 @@ EXEMPLO DE USO:
     }
 
     function execute(b, m) {
-        let t = b.innerText; b.innerText="PROCESSANDO...";
-        setTimeout(() => { b.innerText=m; setTimeout(() => b.innerText=t, 2000); }, 1000);
+        let t = b.innerText; b.innerText="MODIFICANDO REGISTROS...";
+        setTimeout(() => { b.innerText=m; setTimeout(() => b.innerText=t, 2500); }, 1500);
     }
 </script>
 </body>
