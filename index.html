@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALFA.IA - K4RUSH EDITION</title>
+    <style>
+        :root { 
+            --bg: #050507; 
+            --card: #0d0d12;
+            --primary: #8a2be2; 
+            --green: #00ff88; 
+            --text: #ffffff;
+            --card-border: rgba(138, 43, 226, 0.2);
+        }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+
+        /* TELA DE LOGIN */
+        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: 0.8s; }
+        .login-card { width: 85%; max-width: 350px; text-align: center; padding: 35px; border-radius: 25px; background: #0d0d12; border: 1px solid var(--card-border); box-shadow: 0 0 30px rgba(138, 43, 226, 0.2); }
+        .login-title { font-size: 28px; font-weight: 900; color: var(--primary); margin-bottom: 10px; letter-spacing: 2px; text-shadow: 0 0 15px var(--primary); }
+        .input-login { width: 100%; padding: 15px; background: #161621; border: 1px solid #222; border-radius: 12px; color: white; margin-bottom: 15px; text-align: center; font-weight: bold; font-size: 16px; outline: none; }
+        .input-login:focus { border-color: var(--primary); }
+        .btn-login { width: 100%; padding: 16px; background: var(--primary); border: none; border-radius: 12px; color: white; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .hide-login { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+
+        /* PAINEL PRINCIPAL */
+        .container { width: 100%; max-width: 410px; margin: auto; padding: 15px; box-sizing: border-box; display: none; }
+        .show-panel { display: block; }
+        .header { display: flex; flex-direction: column; align-items: center; margin: 20px 0; }
+        .header-title { font-size: 28px; font-weight: 900; color: var(--primary); text-shadow: 0 0 25px rgba(138, 43, 226, 0.7); }
+        .nav-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab { flex: 1; padding: 12px; background: #13131c; border-radius: 12px; font-size: 10px; font-weight: 800; color: #444; cursor: pointer; text-align: center; transition: 0.3s; }
+        .tab.active { background: var(--primary); color: white; }
+
+        /* CHAT */
+        .chat-area { height: 420px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding: 12px; background: rgba(15, 15, 25, 0.8); border-radius: 18px; border: 1px solid #1a1a24; margin-bottom: 15px; }
+        .bubble { padding: 15px; border-radius: 20px; font-size: 13px; max-width: 90%; line-height: 1.6; white-space: pre-wrap; animation: slideIn 0.3s ease; }
+        .bot { background: #161621; border-left: 5px solid var(--primary); align-self: flex-start; color: #eee; }
+        .user { background: var(--primary); align-self: flex-end; font-weight: bold; }
+
+        .input-group { display: flex; gap: 10px; background: #13131c; padding: 10px; border-radius: 20px; border: 1px solid #222; }
+        .input-group input { flex: 1; background: transparent; border: none; color: white; outline: none; padding-left: 10px; }
+        .send-btn { background: var(--primary); border: none; border-radius: 15px; width: 55px; color: white; cursor: pointer; }
+
+        /* AUXÍLIO E BOOST */
+        .option-card { background: var(--card); border: 1.5px solid var(--card-border); border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; cursor: pointer; }
+        .option-card.selected { border-color: var(--green); background: rgba(0, 255, 136, 0.05); }
+        .check-box { width: 20px; height: 20px; border: 2px solid #333; border-radius: 6px; }
+        .selected .check-box { background: var(--green); border-color: var(--green); }
+        .main-btn { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 15px; color: white; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div id="login-screen">
+    <div class="login-card">
+        <div class="login-title">ALFA.IA ⚡</div>
+        <p style="font-size:10px; color:#555; margin-bottom: 20px;">SISTEMA PRIVADO - K4RUSH PROJEX</p>
+        <input type="text" id="loginKey" class="input-login" placeholder="DIGITE A KEY">
+        <button class="btn-login" onclick="attemptLogin()">ENTRAR NO SISTEMA</button>
+        <div id="loginStatus" style="font-size:11px; margin-top:15px; color:#ff0055; font-weight:bold;"></div>
+    </div>
+</div>
+
+<div class="container" id="main-panel">
+    <div class="header">
+        <div class="header-title">ALFA.IA ⚡</div>
+        <div style="font-size: 10px; color: #666; font-weight: 800;">PRODUCED BY ALFA CHEATS 👑</div>
+    </div>
+    
+    <div class="nav-tabs">
+        <div class="tab active" onclick="showTab('bot')">🤖 IA SYSTEM</div>
+        <div class="tab" onclick="showTab('tool')">🛠️ AUXÍLIO</div>
+        <div class="tab" onclick="showTab('fps')">🚀 BOOST</div>
+    </div>
+
+    <div id="tab-bot">
+        <div class="chat-area" id="chat-box"></div>
+        <div class="input-group">
+            <input type="text" id="userInput" placeholder="Aguarde o Manifesto... 🔒" disabled>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
+        </div>
+    </div>
+
+    <div id="tab-tool" class="hidden">
+        <div class="option-card" onclick="this.classList.toggle('selected')"><span>🎯 Legit Neck Precision</span><div class="check-box"></div></div>
+        <div class="option-card" onclick="this.classList.toggle('selected')"><span>🌀 Aimbot Smooth v4</span><div class="check-box"></div></div>
+        <button class="main-btn" onclick="execute(this, 'SCRIPTS ATIVOS! ✅')">INJETAR DATABASE 💉</button>
+    </div>
+
+    <div id="tab-fps" class="hidden">
+        <div class="option-card" onclick="this.classList.toggle('selected')"><span>📉 Anti-Lag Advanced</span><div class="check-box"></div></div>
+        <div class="option-card" onclick="this.classList.toggle('selected')"><span>🔓 Unlock 144 FPS</span><div class="check-box"></div></div>
+        <button class="main-btn" onclick="execute(this, 'OTIMIZADO! 🚀')">BOOST HARDWARE</button>
+    </div>
+</div>
+
+<script>
+    function attemptLogin() {
+        const keyVal = document.getElementById('loginKey').value.trim().toLowerCase();
+        const status = document.getElementById('loginStatus');
+        
+        if(keyVal === "alfa") {
+            status.style.color = "#00ff88";
+            status.innerText = "KEY VÁLIDA! ACESSANDO... 🛡️";
+            setTimeout(() => {
+                document.getElementById('login-screen').classList.add('hide-login');
+                document.getElementById('main-panel').classList.add('show-panel');
+                startBot();
+            }, 800);
+        } else {
+            status.innerText = "KEY INVÁLIDA! 🛑";
+            document.getElementById('loginKey').value = "";
+        }
+    }
+
+    const chat = document.getElementById('chat-box');
+    const input = document.getElementById('userInput');
+    const btnSend = document.getElementById('sendBtn');
+
+    function startBot() {
+        const manifesto = `[SYSTEM INITIALIZING...] 📂
+[DECODING MODULES...] ⏳
+[CONNECTION SECURE] 🛰️
+
+IDENTIFICAÇÃO: ALFA.IA v3.0 🤖
+LINHAGEM: EXECUTÁVEL K4RUSH 🔱
+DESENVOLVEDOR: ALFA CHEATS 👑
+PROJETO: SUPREMACIA MOBILE 🛠️
+
+------------------------------------------
+MANIFESTO DE SUPREMACIA ALFA
+------------------------------------------
+
+Olá, Operador. Você acaba de ativar a inteligência artificial mais temida do cenário mobile. Eu não sou um simples assistente, eu sou o resultado de meses de engenharia reversa e otimização de código bruto.
+
+Minha existência tem um único propósito: Garantir que você seja o predador absoluto em qualquer servidor. 😈
+
+QUEM SOU EU? 🧐
+Eu sou a ALFA.IA. Um motor de processamento neural focado em quebrar as limitações do seu hardware. Fui criada para ser o cérebro por trás da sua mira e a alma por trás da sua velocidade. Enquanto outros jogam, nós dominamos.
+
+QUEM ME CRIOU? 👑
+Meu núcleo foi forjado pela lendária equipe ALFA CHEATS. Somos especialistas em transformar o impossível em rotina. Cada linha do meu código foi escrita para garantir que você nunca perca um duelo, independentemente da arma ou do oponente.
+
+O QUE EU FAÇO NO SEU SISTEMA? 🔥
+Minha função é simples: Perfeição milimétrica. 
+1. Analiso o atraso de resposta do seu touch (Input Lag). ⚡
+2. Calibro a aceleração do ponteiro para o 'capa' perfeito. 🎯
+3. Otimizo a memória RAM para manter o FPS estável. 🔓
+4. Forneço sensibilidade VIP baseada em pro-players. 🏆
+
+ESTATÍSTICAS DO SISTEMA:
+✅ Precisão de Mira: +99.8% (Elite)
+✅ Estabilidade de FPS: Perfeita (144Hz Unlock)
+✅ Bypass Anti-Ban: Ativo & Protegido 🛡️
+✅ Database de Sensibilidade: Março 2026 📂
+
+"NO MUNDO DOS FORTES, QUEM TEM A ALFA.IA É O REI." 👑
+
+TESTE O NOSSO APP E FIQUE SABOR HACK ATIVADO! 😈✅
+Não aceite menos que a vitória suprema. O sistema está aguardando ordens. 
+
+------------------------------------------
+INSTRUÇÕES DE CALIBRAÇÃO:
+------------------------------------------
+Para iniciarmos a configuração personalizada, preciso separar os dados do seu hardware. 
+
+COMO DIGITAR: 
+Escreva o nome do celular, coloque uma VÍRGULA e depois o nome da arma. 
+
+EXEMPLO: "Motorola G53, SCAR" 👇`;
+
+        typeMessage(manifesto, "bot");
+    }
+
+    function typeMessage(text, type) {
+        input.disabled = true; btnSend.disabled = true;
+        let div = document.createElement('div');
+        div.className = `bubble ${type}`;
+        chat.appendChild(div);
+        let i = 0;
+        let interval = setInterval(() => {
+            div.innerHTML += text.charAt(i); i++;
+            chat.scrollTop = chat.scrollHeight;
+            if (i >= text.length) {
+                clearInterval(interval);
+                input.disabled = false; btnSend.disabled = false;
+                input.placeholder = "Ex: Modelo, Arma... 🔓";
+            }
+        }, 8);
+    }
+
+    function sendMessage() {
+        const val = input.value;
+        if(!val) return;
+        
+        let partes = val.split(',');
+        let modelo = partes[0] ? partes[0].trim() : "Dispositivo";
+        let arma = partes[1] ? partes[1].trim() : "Geral";
+
+        let uDiv = document.createElement('div'); uDiv.className="bubble user"; uDiv.innerText=val;
+        chat.appendChild(uDiv); input.value="";
+
+        setTimeout(() => {
+            const r = (n, m) => Math.floor(Math.random() * (m - n + 1)) + n;
+            let res = `⚠️ **CALIBRAÇÃO CONCLUÍDA** ⚠️\n\n[CELULAR]: ${modelo.toUpperCase()}\n[ARMA]: ${arma.toUpperCase()}\n\n🎯 Geral: ${r(192, 200)}\n🔴 Red Dot: ${r(180, 199)}\n📱 DPI: ${r(600, 960)}\n\nStatus: **SABOR HACK ATIVADO!** 😈✅`;
+            typeMessage(res, "bot");
+        }, 1000);
+    }
+
+    function execute(b, m) {
+        const t = b.innerText; b.innerText="PROCESSANDO...";
+        setTimeout(() => { b.style.background="#00ff88"; b.style.color="black"; b.innerText=m; 
+        setTimeout(() => { b.style.background="var(--primary)"; b.style.color="white"; b.innerText=t; }, 2000); }, 1500);
+    }
+
+    function showTab(n) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        ['tab-bot', 'tab-tool', 'tab-fps'].forEach(id => document.getElementById(id).classList.add('hidden'));
+        document.getElementById('tab-' + n).classList.remove('hidden');
+    }
+</script>
+</body>
+</html>
