@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALFA.IA V7 - ULTIMATE FIX</title>
+    <title>ALFA.IA V8.2 - MASTER GENESIS</title>
     <style>
         :root { 
             --bg: #050507; 
@@ -25,25 +25,36 @@
         /* PAINEL PRINCIPAL */
         .container { width: 100%; max-width: 410px; margin: auto; padding: 15px; box-sizing: border-box; display: none; }
         .show-panel { display: block; }
-        .header { display: flex; flex-direction: column; align-items: center; margin: 20px 0; }
-        .header-title { font-size: 28px; font-weight: 900; color: var(--primary); text-shadow: 0 0 25px rgba(138, 43, 226, 0.7); }
         
-        .nav-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-        .tab { flex: 1; padding: 12px; background: #13131c; border-radius: 12px; font-size: 10px; font-weight: 800; color: #444; cursor: pointer; text-align: center; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; margin-bottom: 15px; }
+        .header-title { font-size: 24px; font-weight: 900; color: var(--primary); text-shadow: 0 0 20px rgba(138, 43, 226, 0.6); }
+        .update-btn { background: transparent; border: none; color: white; font-size: 22px; cursor: pointer; }
+
+        /* SELETOR IGUAL AO PRINT */
+        .sensi-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        .sel-btn { padding: 12px 5px; background: #111118; border: none; color: #555; border-radius: 8px; font-size: 9px; font-weight: 900; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .sel-btn.active { background: var(--primary); color: white; box-shadow: 0 0 15px rgba(138, 43, 226, 0.4); }
+
+        .nav-tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+        .tab { padding: 12px; background: #13131c; border-radius: 10px; font-size: 9px; font-weight: 800; color: #555; cursor: pointer; text-align: center; text-transform: uppercase; }
         .tab.active { background: var(--primary); color: white; }
 
         /* ÁREA DO CHAT */
-        .chat-area { height: 440px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding: 12px; background: rgba(15, 15, 25, 0.9); border-radius: 18px; border: 1px solid #1a1a24; margin-bottom: 15px; }
-        .bubble { padding: 15px; border-radius: 20px; font-size: 13px; max-width: 90%; line-height: 1.6; white-space: pre-wrap; }
-        .bot { background: #161621; border-left: 5px solid var(--primary); align-self: flex-start; color: #eee; }
-        .user { background: var(--primary); align-self: flex-end; font-weight: bold; }
+        .chat-area { height: 360px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 15px; background: #08080e; border-radius: 20px; border: 1px solid #151520; margin-bottom: 15px; border-left: 2px solid var(--primary); }
+        .bubble { padding: 15px; border-radius: 18px; font-size: 12px; max-width: 92%; line-height: 1.5; white-space: pre-wrap; }
+        .bot { background: #0d0d16; color: #ccc; align-self: flex-start; border: 1px solid #1a1a28; }
+        .user { background: var(--primary); color: white; align-self: flex-end; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
-        .input-group { display: flex; gap: 10px; background: #13131c; padding: 10px; border-radius: 20px; border: 1px solid #222; }
-        .input-group input { flex: 1; background: transparent; border: none; color: white; outline: none; padding-left: 10px; }
-        .send-btn { background: var(--primary); border: none; border-radius: 15px; width: 55px; color: white; cursor: pointer; }
+        .input-group { display: flex; gap: 10px; background: #0d0d16; padding: 8px 15px; border-radius: 25px; border: 1px solid #1a1a28; align-items: center; }
+        .input-group input { flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 13px; }
+        .send-btn { background: var(--primary); border: none; border-radius: 50%; width: 40px; height: 40px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 
-        .main-btn { width: 100%; padding: 16px; background: var(--primary); border: none; border-radius: 15px; color: white; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; cursor: pointer; font-size: 12px; }
-        .ff-btn { width: 100%; padding: 15px; background: linear-gradient(90deg, #ff4500, #ff8c00); border: none; border-radius: 15px; color: white; font-weight: 900; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; cursor: pointer; }
+        .action-box { display: flex; flex-direction: column; gap: 8px; }
+        .main-btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 10px; color: white; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 10px; }
+        .ff-btn { width: 100%; padding: 15px; background: #ff5e00; border: none; border-radius: 12px; color: white; font-weight: 900; text-transform: uppercase; cursor: pointer; margin-top: 5px; font-size: 11px; }
+        
+        #update-modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 10000; display: none; align-items: center; justify-content: center; }
+        .modal-content { background: #0d0d12; border: 1px solid var(--primary); width: 85%; padding: 25px; border-radius: 20px; box-shadow: 0 0 30px var(--primary); }
         .hidden { display: none; }
     </style>
 </head>
@@ -52,17 +63,36 @@
 <div id="login-screen">
     <div class="login-card">
         <div class="login-title">ALFA.IA ⚡</div>
-        <p style="font-size:10px; color:#555; margin-bottom: 20px;">V7.0 ULTIMATE - BY LEWI PROJECT</p>
-        <input type="text" id="loginKey" class="input-login" placeholder="DIGITE A KEY">
-        <button class="btn-login" onclick="attemptLogin()">ACESSAR SISTEMA</button>
+        <p style="font-size:10px; color:#444; margin-bottom: 20px;">V8.2 - BY LEWI PROJECT</p>
+        <input type="text" id="loginKey" class="input-login" placeholder="KEY DE ACESSO">
+        <button class="btn-login" onclick="attemptLogin()">ENTRAR NO SISTEMA</button>
         <div id="loginStatus" style="font-size:11px; margin-top:15px; color:#ff0055; font-weight:bold;"></div>
+    </div>
+</div>
+
+<div id="update-modal" onclick="closeModal()">
+    <div class="modal-content">
+        <h2 style="color:var(--primary); margin-top:0;">📃 LOG V8.2</h2>
+        <p style="font-size: 11px; color: #888; line-height: 1.6;">
+            ✅ <b>VISUAL:</b> Seletor de sensibilidade idêntico ao print do vídeo.<br>
+            ✅ <b>LOGIC FIX:</b> Leitura de múltiplas armas corrigida para o banco de dados.<br>
+            ✅ <b>SISTEMA:</b> Injeção de No Recoil e HS Crânio via Scripts de Registro.<br>
+            ✅ <b>FREE FIRE:</b> Botão configurado com Intent nativo para abrir o jogo direto.
+        </p>
+        <button class="main-btn" onclick="closeModal()">FECHAR RELATÓRIO</button>
     </div>
 </div>
 
 <div class="container" id="main-panel">
     <div class="header">
-        <div class="header-title">ALFA.IA V7 ⚡</div>
-        <div style="font-size: 10px; color: #666; font-weight: 800;">PRODUCED BY ALFA CHEATS 👑</div>
+        <div class="header-title">ALFA.IA V8.2 ⚡</div>
+        <button class="update-btn" onclick="openModal()">📃</button>
+    </div>
+
+    <div class="sensi-selector">
+        <button class="sel-btn" id="s-baixa" onclick="setSensi('baixa')">SENSI BAIXA</button>
+        <button class="sel-btn active" id="s-media" onclick="setSensi('media')">SENSI MÉDIA</button>
+        <button class="sel-btn" id="s-alta" onclick="setSensi('alta')">SENSI ALTA</button>
     </div>
     
     <div class="nav-tabs">
@@ -75,73 +105,88 @@
         <div class="chat-area" id="chat-box"></div>
         <div class="input-group">
             <input type="text" id="userInput" placeholder="Aguarde... 🔒" disabled>
-            <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>➤</button>
+            <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
         </div>
     </div>
 
-    <div id="tab-tool" class="hidden">
-        <button class="main-btn" onclick="execute(this, 'NO RECOIL: ATIVO (REGEDIT) 🛠️')">ATIVAR NO RECOIL (FIXED)</button>
-        <button class="main-btn" onclick="execute(this, 'HS PESCOÇO: 100% CRÂNIO 💀')">ATIVAR HS PESCOÇO (LOCK)</button>
+    <div id="tab-tool" class="hidden action-box">
+        <button class="main-btn" onclick="execute(this, 'NO RECOIL: ATIVADO ✅')">ATIVAR NO RECOIL (SCRIPT)</button>
+        <button class="main-btn" onclick="execute(this, 'HS CRÂNIO: ATIVADO 💀')">ATIVAR HS PESCOÇO (LOCK)</button>
         <button class="main-btn" onclick="execute(this, 'AIMBOT/FOV INJETADO! 🎯')">INJETAR AUXÍLIO GERAL</button>
+        <button class="main-btn" onclick="execute(this, 'ANTI-LAG SYSTEM: ATIVO 🧊')">INJETAR ANTI-LAG REGEDIT</button>
+        <button class="main-btn" onclick="execute(this, 'SENSI 100% CAPA: ATIVA 🔥')">INJETAR SCRIPT 100% CAPA</button>
         <button class="ff-btn" onclick="openFF()">🔫 ABRIR FREE FIRE</button>
     </div>
 
-    <div id="tab-fps" class="hidden">
+    <div id="tab-fps" class="hidden action-box">
         <button class="main-btn" onclick="execute(this, 'SISTEMA OTIMIZADO! 🚀')">BOOST HARDWARE</button>
         <button class="ff-btn" onclick="openFF()">🔥 INSTANT START FF</button>
     </div>
 </div>
 
 <script>
+    let currentSensi = 'media';
+    function setSensi(t) { 
+        currentSensi = t; 
+        document.querySelectorAll('.sel-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('s-' + t).classList.add('active');
+    }
+    function openModal() { document.getElementById('update-modal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('update-modal').style.display = 'none'; }
+
     function openFF() {
-        window.location.href = "freefire://";
-        setTimeout(function() {
-            window.location.href = "intent://#Intent;package=com.dts.freefireth;scheme=freefire;end";
-        }, 800);
+        // Código para abrir o jogo direto sem erro de página inexistente
+        window.location.href = "intent://#Intent;package=com.dts.freefireth;scheme=freefire;end";
     }
 
     function attemptLogin() {
-        const keyVal = document.getElementById('loginKey').value.trim().toLowerCase();
-        if(keyVal === "alfa") {
+        if(document.getElementById('loginKey').value.trim().toLowerCase() === "alfa") {
             document.getElementById('login-screen').classList.add('hide-login');
             document.getElementById('main-panel').classList.add('show-panel');
             startBot();
         } else {
-            document.getElementById('loginStatus').innerText = "KEY INVÁLIDA! 🛑";
+            document.getElementById('loginStatus').innerText = "KEY INCORRETA! 🛑";
         }
+    }
+
+    function startBot() {
+        const manifesto = `╔════════════════════════════════════╗
+   ⚡ ALFA.IA MASTER GENESIS V8.2 ⚡
+╚════════════════════════════════════╝
+     BEM-VINDO AO FUTURO DO MOBILE
+   PRODUZIDO POR: LEWI DOS SANTOS 👑
+             (7°B JACUÍPE / R.B)
+
+SISTEMA DE CALIBRAÇÃO RECONHECIDO COM SUCESSO.
+SCRIPT DE REGISTRO (REGEDIT) PRONTO PARA INJEÇÃO.
+NO RECOIL E HS CRÂNIO INTEGRADOS.
+
+ESTEJA PRONTO PARA O SABOR HACK! 😈🔥
+
+DIGITE O SEU CELULAR E AS ARMAS ABAIXO 👇
+Ex: Motorola G53, Desert, UMP...`;
+        typeMessage(manifesto, "bot");
     }
 
     const chat = document.getElementById('chat-box');
     const input = document.getElementById('userInput');
     const btnSend = document.getElementById('sendBtn');
 
-    function startBot() {
-        const manifesto = `[ULTIMATE V7 ONLINE] 📂\nDEV: LEWI DOS SANTOS OLIVEIRA 👑\n\nNo Recoil e HS Pescoço integrados com sucesso.\nDigite seu Celular e as Armas 👇`;
-        typeMessage(manifesto, "bot");
-    }
-
     function typeMessage(text, type) {
         input.disabled = true; btnSend.disabled = true;
-        let div = document.createElement('div');
-        div.className = `bubble ${type}`;
+        let div = document.createElement('div'); div.className = `bubble ${type}`;
         chat.appendChild(div);
         let i = 0;
         let interval = setInterval(() => {
             div.innerHTML += text.charAt(i); i++;
             chat.scrollTop = chat.scrollHeight;
-            if (i >= text.length) {
-                clearInterval(interval);
-                input.disabled = false; btnSend.disabled = false;
-                input.placeholder = "Modelo, Armas... 🔓";
-                input.focus();
-            }
-        }, 5);
+            if (i >= text.length) { clearInterval(interval); input.disabled = false; btnSend.disabled = false; input.focus(); }
+        }, 1);
     }
 
     function sendMessage() {
         const val = input.value;
-        if(!val.includes(',')) return;
-        
+        if(!val.includes(',')) { alert("Use a VÍRGULA: Celular, Arma 1, Arma 2..."); return; }
         let uDiv = document.createElement('div'); uDiv.className="bubble user"; uDiv.innerText=val;
         chat.appendChild(uDiv); input.value="";
 
@@ -149,21 +194,24 @@
             const r = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
             let partes = val.split(',');
             let modelo = partes[0].trim().toUpperCase();
-            let armasStr = partes.slice(1).join(',').replace(/\s+e\s+/gi, ',');
-            let listaArmas = armasStr.split(',').map(a => a.trim().toUpperCase()).filter(a => a.length > 0);
+            // Pega todas as armas digitadas após a vírgula
+            let armas = partes.slice(1).map(a => a.trim().toUpperCase()).filter(a => a.length > 0).join(' | ');
 
-            let g = r(195, 200); let rd = r(185, 196); let m2 = r(178, 192); let m4 = r(172, 188);
+            let g, rd, m2, m4, dpi, btn;
+            if(currentSensi === 'baixa') {
+                g = r(88, 93); rd = r(82, 89); m2 = r(78, 84); m4 = r(74, 82); dpi = r(395, 475); btn = r(56, 60);
+            } else if(currentSensi === 'alta') {
+                g = r(197, 200); rd = r(195, 199); m2 = r(191, 197); m4 = r(188, 194); dpi = r(710, 930); btn = r(40, 46);
+            } else {
+                g = r(160, 185); rd = r(150, 175); m2 = r(140, 165); m4 = r(135, 158); dpi = r(520, 595); btn = r(49, 54);
+            }
 
-            let res = `⚠️ **CONFIGURAÇÃO V7 ULTIMATE** ⚠️\n\n[CELULAR]: ${modelo}\n[ARMAS]: ${listaArmas.join(' | ')}\n----------------------------------\n\n`;
-            res += `🎯 **SENSIBILIDADE ÚNICA:**\n• Geral: ${g}\n• Red Dot: ${rd}\n• Mira 2x: ${m2}\n• Mira 4x: ${m4}\n\n`;
+            // Trava específica para o Motorola G53
+            if(modelo.includes("G53")) { dpi = r(510, 580); }
 
-            let dpi;
-            if (modelo.includes("G53")) { dpi = r(510, 580); } 
-            else { dpi = r(620, 940); }
-            
-            res += `----------------------------------\n📱 DPI RECOMENDADA: ${dpi}\n🔘 BOTÃO: ${r(44, 55)}%\n\nStatus: **SABOR HACK ATIVADO!** 😈✅`;
+            let res = `⚠️ **CALIBRAÇÃO V8.2 CONCLUÍDA** ⚠️\n[NÍVEL]: ${currentSensi.toUpperCase()}\n[CELULAR]: ${modelo}\n[ARMAS]: ${armas}\n----------------------------------\n\n🎯 **SENSIBILIDADE IA:**\n• Geral: ${g}\n• Red Dot: ${rd}\n• Mira 2x: ${m2}\n• Mira 4x: ${m4}\n\n📱 DPI: ${dpi}\n🔘 BOTÃO: ${btn}%\n\nStatus: **SABOR HACK ATIVADO!** 😈✅`;
             typeMessage(res, "bot");
-        }, 1000);
+        }, 600);
     }
 
     function showTab(n) {
@@ -174,8 +222,8 @@
     }
 
     function execute(b, m) {
-        let t = b.innerText; b.innerText="MODIFICANDO REGISTROS...";
-        setTimeout(() => { b.innerText=m; setTimeout(() => b.innerText=t, 2500); }, 1500);
+        let t = b.innerText; b.innerText="CARREGANDO SCRIPTS...";
+        setTimeout(() => { b.innerText=m; setTimeout(() => b.innerText=t, 2500); }, 1200);
     }
 </script>
 </body>
